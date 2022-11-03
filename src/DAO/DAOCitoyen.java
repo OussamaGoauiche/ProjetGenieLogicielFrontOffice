@@ -12,7 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 
-class DAOCitoyen {
+public class DAOCitoyen {
 
 	
 	public  static List<Citoyen> getAll() throws SQLException
@@ -67,7 +67,7 @@ class DAOCitoyen {
 
 	}
 	
-	public static void ajouter(Citoyen c) throws SQLException
+	public static boolean ajouter(Citoyen c) throws SQLException
 	 {
 		Transaction transaction = null;
 		try {
@@ -81,13 +81,14 @@ class DAOCitoyen {
 			session.save(c);
 			// commit transaction
 			transaction.commit();
+			return true;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			e.printStackTrace();
 		} 
-		
+		return false;
 	 }
 
 	 public static void modifier (Citoyen e1) throws SQLException
@@ -126,16 +127,18 @@ class DAOCitoyen {
 			//System.out.println(c);
 			if (c!= null) {
 				session.delete(c);
+				// commit transaction
+				transaction.commit();
+				
 				System.out.println(" citoyen is deleted");
+				return true;
 			}
 			else {
 				System.out.println("citoyen n'existe pas");
 
 			}
 
-			// commit transaction
-			transaction.commit();
-			return true;
+			
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();

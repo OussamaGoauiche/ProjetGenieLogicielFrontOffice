@@ -72,7 +72,7 @@ public class DAODemande {
 
 	}
 	
-	public static void ajouter(Demande c) throws SQLException
+	public static boolean ajouter(Demande c) throws SQLException
 	 {
 		Transaction transaction = null;
 		try {
@@ -85,12 +85,14 @@ public class DAODemande {
 			session.save(c);
 			// commit transaction
 			transaction.commit();
+			return true;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			e.printStackTrace();
 		} 
+		return false;
 		
 	 }
 
