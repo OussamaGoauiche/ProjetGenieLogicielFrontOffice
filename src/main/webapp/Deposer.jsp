@@ -25,11 +25,23 @@
                 <i class="fas fa-times fermer"></i>
             </div>
             <ul class="menu">
-                <li><a href="Acceuil.jsp">Home</a></li>
+               <li><a href="Acceuil.jsp">Home</a></li>
                 <li><a href="Deposer.jsp">D&eacute;poser</a></li>
-                <li><a href="Modifier.jsp">Modifier</a></li>
-                <li><a href="#">Suivre</a></li>
-                <li><a class="butn" href="#"><%=(String) session.getAttribute("nom")%></a></li>
+                <li><a href="<%=request.getContextPath()%>/listerDemandeByCin">Suivre</a></li>
+              
+                <li><a class="butn" href="#"><% 
+                if(session.getAttribute("nom")!=null){
+                	out.println((String) session.getAttribute("nom"));
+                	%>
+                	<li><a class="butn" href="<%=request.getContextPath()%>/logout">
+                	logout
+                	</a></li>
+                	<% 
+                }else
+                	response.sendRedirect("login.jsp");
+                	
+                	%>
+                	</a></li>
             </ul>
         </nav>
     </header>
@@ -40,7 +52,7 @@
             <p style="font-size:bold ">Creer demande</p>
         </div>
     </div>
-	 <p style="font-size:bold ">Creer demande</p>
+	
     <p style="color:red;font-size:20px">${message2}</p>
 
  
@@ -63,10 +75,10 @@
                             <label for="origine" class="col-sm-2 control-label">PROCEDURE :</label>
                             <div class="col-sm-8">
                                 <select class="form-control" name="choix2">
-                                  <option>Double diplomation</option>
-                                    <option>Echange</option>
-                                    <option>PFE</option>
-                                    <option>suivi de semestres enseignement</option>
+                                  <option>Procedure1</option>
+                                    <option>Procedure2</option>
+                                    <option>Procedure3</option>
+                                    <option>Procedure4</option>
                                 </select>
                             </div>
                         </div>

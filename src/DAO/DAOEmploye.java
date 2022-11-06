@@ -144,7 +144,7 @@ public class DAOEmploye {
 		return false;    
                 
 	}
-	public boolean validate(String cin,String email, String password) {
+	public static boolean validate(String cin,String email, String password) {
 
 		Transaction transaction = null;
 		Employe user = null;
@@ -157,9 +157,7 @@ public class DAOEmploye {
 			// get an Employe object
 			user = (Employe) session.createQuery("FROM Employe U WHERE U.cin = :cin").setParameter("cin", cin).uniqueResult();
 			
-			String hash=BCrypt.hashpw(password, BCrypt.gensalt());
-
-			if(user != null && user.getEmail().equals(email) &&user.getPassword().equals(hash)) {
+			if(user != null && user.getEmail().equals(email) &&user.getPassword().equals(password)) {
 				return true;
 			}
 			// commit transaction

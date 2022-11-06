@@ -30,7 +30,7 @@ public class Employe implements Serializable {
 	@Column(name="password")
 	private String password;
 	@OneToMany(mappedBy = "employe" , fetch=FetchType.LAZY)
-	private Collection<Demande> demandes;
+	private Collection<Etape> etapes;
 	
 	public Employe() {
 		super();

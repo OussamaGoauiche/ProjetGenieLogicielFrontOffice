@@ -11,6 +11,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import Beans.Citoyen;
 import Beans.Demande;
+import reponse.Reponse;
 
 
 
@@ -47,6 +48,119 @@ public class DAODemande {
 
 	}
 	
+	public  static List<Demande> getAlldemandes(String cin1) throws SQLException
+	{
+		List<Demande> demandes= null;
+		Transaction transaction = null;
+		
+		try {
+			SessionFactory sessionFactory = new Configuration()
+	    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+	        Session session = sessionFactory.openSession();
+			// start a transaction
+	        Citoyen c =DAOCitoyen.getUnique(cin1);
+			transaction = session.beginTransaction();
+			// get an Demande object
+			String hql = "FROM Demande E WHERE E.citoyen.cin ='"+cin1+"'";
+
+			demandes = session.createQuery(hql).getResultList();
+			
+			// commit transaction
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+		return demandes;
+
+	}
+	
+	public  static List<Demande> getAllDemandeChef(String cin1) throws SQLException{
+		
+	List<Demande> demandes= null;
+	Transaction transaction = null;
+	
+	try {
+		SessionFactory sessionFactory = new Configuration()
+    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+		// start a transaction
+        Citoyen c =DAOCitoyen.getUnique(cin1);
+		transaction = session.beginTransaction();
+		// get an Demande object
+		String query = "SELECT D FROM Demande D , ProcedureAdministrateur P WHERE D.procedureNom.nom_procedure=P.nom_procedure and P.chef.cin='"+cin1+"'and D.etat="+Reponse.EnCours+" and D.termination="+false;
+
+		demandes = session.createQuery(query).getResultList();
+		
+		// commit transaction
+		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+	}
+	return demandes;
+	}
+
+	public  static List<Demande> getAllDemandeEmploye(String cin1) throws SQLException{
+		
+	List<Demande> demandes= null;
+	Transaction transaction = null;
+	
+	try {
+		SessionFactory sessionFactory = new Configuration()
+    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+		// start a transaction
+        Citoyen c =DAOCitoyen.getUnique(cin1);
+		transaction = session.beginTransaction();
+		// get an Demande object
+		String query = "SELECT D FROM Demande D ,Etape E WHERE D.procedureNom.nom_procedure=E.nomProcedures.nom_procedure  and E.employe.cin='"+cin1+"'and D.etat="+Reponse.Accepte+" and D.termination="+false;
+
+		demandes = session.createQuery(query).getResultList();
+		
+		// commit transaction
+		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+	}
+	return demandes;
+	}
+	
+	
+	public  static List<Demande> getAllDemandeChefAccepte(String cin1) throws SQLException{
+		
+	List<Demande> demandes= null;
+	Transaction transaction = null;
+	
+	try {
+		SessionFactory sessionFactory = new Configuration()
+    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+		// start a transaction
+        Citoyen c =DAOCitoyen.getUnique(cin1);
+		transaction = session.beginTransaction();
+		// get an Demande object
+		String query = "SELECT D FROM Demande D , ProcedureAdministrateur P WHERE D.procedureNom.nom_procedure=P.nom_procedure and P.chef.cin='"+cin1+"'and D.etat="+Reponse.Accepte+" and D.termination="+false;
+
+		demandes = session.createQuery(query).getResultList();
+		
+		// commit transaction
+		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+	}
+	return demandes;
+	}
 	public static Demande getUnique(int id) throws SQLException
 	{
 		Transaction transaction = null;
@@ -116,7 +230,75 @@ public class DAODemande {
 				e.printStackTrace();
 			}
 	 }
+
+	 public static void modifierEtatGenererJeton (Demande e1, String jeton) throws SQLException
+	 {	
+			Transaction transaction = null;
+			try {
+				SessionFactory sessionFactory = new Configuration()
+		    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+		        Session session = sessionFactory.openSession();
+				// start a transaction
+				transaction = session.beginTransaction();
+				// save the Demande object
+				e1.setEtat(Reponse.Accepte);
+				e1.setJeton(jeton);
+				session.update(e1);
+				// commit transaction
+				transaction.commit();
+			} catch (Exception e) {
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				e.printStackTrace();
+			}
+	 }
 	
+	 public static void modifierEtat (Demande e1) throws SQLException
+	 {	
+			Transaction transaction = null;
+			try {
+				SessionFactory sessionFactory = new Configuration()
+		    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+		        Session session = sessionFactory.openSession();
+				// start a transaction
+				transaction = session.beginTransaction();
+				// save the Demande object
+				e1.setEtat(Reponse.Refus);
+				session.update(e1);
+				// commit transaction
+				transaction.commit();
+			} catch (Exception e) {
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				e.printStackTrace();
+			}
+	 }
+	
+	 public static void modifierTermination (Demande e1) throws SQLException
+	 {	
+			Transaction transaction = null;
+			try {
+				SessionFactory sessionFactory = new Configuration()
+		    		    .configure("DAO/hibernate.cfg.xml").buildSessionFactory();
+		        Session session = sessionFactory.openSession();
+				// start a transaction
+				transaction = session.beginTransaction();
+				// save the Demande object
+				e1.setTermination(true);
+				session.update(e1);
+				// commit transaction
+				transaction.commit();
+			} catch (Exception e) {
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				e.printStackTrace();
+			}
+	 }
+
+	 
 	public static boolean supprimer(int id) throws SQLException {
 		Transaction transaction = null;
 		try  {
@@ -129,8 +311,11 @@ public class DAODemande {
 			// Delete a Demande object
 			Demande c = session.get(Demande.class, id);
 			//System.out.println(c);
-			if (c != null) {
+			if (c!= null) {
 				session.delete(c);
+				// commit transaction
+				transaction.commit();
+				
 				System.out.println(" demande is deleted");
 				return true;
 			}
@@ -139,8 +324,8 @@ public class DAODemande {
 
 			}
 
-			// commit transaction
-			transaction.commit();
+
+			
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -151,13 +336,15 @@ public class DAODemande {
                 
 	}
 	
+
+	
 	public static void main(String[] args) throws SQLException {
 		
 			// TODO Auto-generated method stub
 		Citoyen a=new Citoyen("WA212","khalid","oussama","aimane@gmail.com","Casablanca","074323456","azerty");
 
-			   Demande c=new Demande("declarer","qwerty","aswqd",a);
-		       ajouter(c);
+			  // Demande c=new Demande("declarer","qwerty","aswqd",a);
+		      // ajouter(c);
 		/*List<Demande> demandes= new ArrayList<Demande>();
 		demandes=getAll();
 	   for(Demande c1:demandes)

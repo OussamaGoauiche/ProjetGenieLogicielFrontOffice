@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceuil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style.css" >
+    
+    
 </head>
 <body>
 
@@ -24,13 +26,13 @@
             <ul class="menu">
                 <li><a href="Acceuil.jsp">Home</a></li>
                 <li><a href="Deposer.jsp">D&eacute;poser</a></li>
-                <li><a href="Modifier.jsp">Modifier</a></li>
-                <li><a href="#">Suivre</a></li>
+                <li><a href="<%=request.getContextPath()%>/listerDemandeByCin">Suivre</a></li>
+              
                 <li><a class="butn" href="#"><% 
                 if(session.getAttribute("nom")!=null){
                 	out.println((String) session.getAttribute("nom"));
                 	%>
-                	<li><a class="butn" href="<%=request.getContextPath()%>/oussama/logout">
+                	<li><a class="butn" href="<%=request.getContextPath()%>/logout">
                 	logout
                 	</a></li>
                 	<% 

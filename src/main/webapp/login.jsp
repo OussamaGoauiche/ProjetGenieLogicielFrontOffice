@@ -1,5 +1,7 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+   
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,7 +10,8 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--Link css-->
-    <link rel="stylesheet" href="./css/logincss.css"/>
+    
+     <link rel="stylesheet" href="./css/logincss.css?v=<%=new Date() %>" >
     <!--Font-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import reponse.Reponse;
 @Entity 
 @Table(name= "Demande") 
 public class Demande implements Serializable{
@@ -17,20 +18,18 @@ public class Demande implements Serializable{
 	private int id;
 	@Column(name="description")
 	private String description;
-	@Column(name="etat")
-	private String etat;
+	@Column(name="etat" )
+	private Reponse etat= reponse.Reponse.EnCours;
 	@Column(name="url_document")
 	private  String url_document;
-	@Column(name="nom_procedure")
-	private String nom_procedure;
 	@Column(name="jeton")
-	private String jeton;
+	private String jeton="pas encore générer";
+	@Column(name="termination")
+	private boolean termination=false;
 	@ManyToOne
 	private Citoyen citoyen;
 	@ManyToOne
-	private Employe employe;
-	@ManyToOne
-	private Chef_division chef;
+	private ProcedureAdministrateur procedureNom; 
 	
 	
 	public Demande() {
@@ -39,19 +38,13 @@ public class Demande implements Serializable{
 	}
 
 
-
-
-
-	public Demande(String description, String url_document, String nom_procedure, Citoyen citoyen) {
+	public Demande(String description, String url_document, Citoyen citoyen, ProcedureAdministrateur procedureNom) {
 		super();
 		this.description = description;
 		this.url_document = url_document;
-		this.nom_procedure = nom_procedure;
 		this.citoyen = citoyen;
+		this.procedureNom = procedureNom;
 	}
-
-
-
 
 
 	public int getId() {
@@ -74,12 +67,12 @@ public class Demande implements Serializable{
 	}
 
 
-	public String getEtat() {
+	public Reponse getEtat() {
 		return etat;
 	}
 
 
-	public void setEtat(String etat) {
+	public void setEtat(Reponse etat) {
 		this.etat = etat;
 	}
 
@@ -91,16 +84,6 @@ public class Demande implements Serializable{
 
 	public void setUrl_document(String url_document) {
 		this.url_document = url_document;
-	}
-
-
-	public String getNom_procedure() {
-		return nom_procedure;
-	}
-
-
-	public void setNom_procedure(String nom_procedure) {
-		this.nom_procedure = nom_procedure;
 	}
 
 
@@ -124,38 +107,55 @@ public class Demande implements Serializable{
 	}
 
 
-	public Employe getEmploye() {
-		return employe;
+	public boolean isTermination() {
+		return termination;
 	}
 
 
-	public void setEmploye(Employe employe) {
-		this.employe = employe;
+	public void setTermination(boolean termination) {
+		this.termination = termination;
+	}
+
+	
+
+
+	public ProcedureAdministrateur getProcedureNom() {
+		return procedureNom;
 	}
 
 
-	public Chef_division getChef() {
-		return chef;
-	}
-
-
-	public void setChef(Chef_division chef) {
-		this.chef = chef;
+	public void setProcedureNom(ProcedureAdministrateur procedureNom) {
+		this.procedureNom = procedureNom;
 	}
 
 
 	@Override
 	public String toString() {
 		return "Demande [id=" + id + ", description=" + description + ", etat=" + etat + ", url_document="
-				+ url_document + ", nom_procedure=" + nom_procedure + ", jeton=" + jeton + ", citoyen=" + citoyen
-				+ ", employe=" + employe + ", chef=" + chef + "]";
+				+ url_document + ", jeton=" + jeton + ", termination=" + termination + ", citoyen=" + citoyen
+				+ ", procedureNom=" + procedureNom + "]";
 	}
+
+
+
 	
-	
 
 	
-
-
-
 	
 }
+
+
+
+
+
+
+
+	
+	
+	
+
+	
+
+
+
+	
