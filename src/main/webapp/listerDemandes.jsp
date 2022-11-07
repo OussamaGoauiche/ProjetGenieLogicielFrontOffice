@@ -12,8 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/forme.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+    <style>
+     <%@ include file="./css/style.css"%>
+       <%@ include file="./css/forme.css"%>
+           
+    </style>
 </head>
 <body>
 
@@ -52,7 +59,7 @@
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">
-			<h3 class="text-center">List of des demandes</h3>
+			<h3 class="text-center">Liste des demandes</h3>
             <p style="color:red;font-size:20px">${message}</p>
 			
 			<hr>
@@ -63,7 +70,7 @@
 					<tr>
 						<th>Description</th>
 						<th>Etat</th>
-						<th>nom_procedure</th>
+						<th>Nom du procedure</th>
 					     <th>Jeton</th>
 					      <th>Modifier</th>
 					      <th>Supprimer</th>
@@ -79,8 +86,8 @@
 							<td><c:out value="${demande.getProcedureNom().nom_procedure}" /></td>
 							<td><c:out value="${demande.jeton}" /></td>
 
-							<td><a href="<%=request.getContextPath()%>/modifier?id=<c:out value='${demande.id}' />">Modifier</a>
-					        <td><a href="<%=request.getContextPath()%>/delete?id=<c:out value='${demande.id}' />">Supprimer</a>
+							<td><a  class="btn btn-primary" href="<%=request.getContextPath()%>/modifier?id=<c:out value='${demande.id}' />">Modifier</a>
+					        <td><a  class="btn btn-primary" href="<%=request.getContextPath()%>/delete?id=<c:out value='${demande.id}' />">Supprimer</a>
 								
 
 							<!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
@@ -93,6 +100,9 @@
 			</table>
 		</div>
 	</div>
+    <script type="text/javascript">
+    <%@ include file="./javascript/app.js"%>
 
+    </script>
 </body>
 </html>

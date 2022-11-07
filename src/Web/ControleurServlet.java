@@ -103,6 +103,13 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		 case "/recevoirDemandeEmploye":
 			 recevoirDemandeEmploye(request, response);
 				break;
+		 case "/logoutChef":
+			 logoutChef(request, response);
+				break;
+				
+		 case "/logoute":
+			 logoutEmploye(request, response);
+				break;
 		}
 	} catch (SQLException ex) {
 		throw new ServletException(ex);
@@ -225,13 +232,23 @@ private void creerDemande(HttpServletRequest request, HttpServletResponse respon
 }
 private void logout(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
 	
-	if(request.getSession().getAttribute("cin")!=null){
 		request.getSession().removeAttribute("cin");
 		request.getSession().removeAttribute("nom");
 		response.sendRedirect("login.jsp");
 	}
-	else
-		response.sendRedirect("login.jsp");
+
+private void logoutChef(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+	
+	request.getSession().removeAttribute("cin");
+	request.getSession().removeAttribute("nom");
+	response.sendRedirect("loginChef.jsp");
+}
+
+private void logoutEmploye(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+	
+	request.getSession().removeAttribute("cin");
+	request.getSession().removeAttribute("nom");
+	response.sendRedirect("loginEmploye.jsp");
 }
 
 private void ecrireFichier( Part part, String nomFichier, String chemin ) throws IOException {

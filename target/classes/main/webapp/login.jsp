@@ -11,7 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--Link css-->
     
-     <link rel="stylesheet" href="./css/logincss.css?v=<%=new Date() %>" >
+    <style>
+     <%@ include file="./css/logincss.css"%>
+    </style>
     <!--Font-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +22,8 @@
       src="https://kit.fontawesome.com/64d58efce2.js"
       crossorigin="anonymous"
     ></script>
+    
+     
   </head>
   <body>
       
@@ -121,6 +125,10 @@
     </div>
 
 
-    <script src="./javascript/app2.js"></script>
+   <script type="text/javascript">
+   <%@ include file="./javascript/app2.js"%>
+
+   </script>
+  
   </body>
 </html>
